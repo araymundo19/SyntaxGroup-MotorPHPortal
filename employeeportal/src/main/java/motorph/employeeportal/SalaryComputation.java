@@ -17,6 +17,14 @@ import java.time.format.*;
 import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 
+/*
+* Working on the Assumption that Hourly Rate is computed on an 84+- rate (inconsistent)
+* Will be using it as is for computing daily/weekly rates/late/overtime
+* Gross semi-monthly and Basic Salary will be used to computation for government manadatory deductions
+* Allowances are posted as is (monthly basis)
+*/
+
+
 //class to handle the object/model
 class HoursMinutes {
 
@@ -47,7 +55,7 @@ public class SalaryComputation {
     
     //attendance collector from csv per month
     public static List<String[]> AttendanceCollector(String employeeNumber){
-        String csvURL = "https://drive.google.com/uc?export=download&id=1lQMufI6JKpVuEsQSBnbc9RkXdnfbGi2T";
+        String csvURL = "https://drive.google.com/uc?export=download&id=1Gh7C6XjNXvdYJHEnS39kXN21CtkL-1Zh";
         
         long monthInput;
         
@@ -95,7 +103,7 @@ public class SalaryComputation {
     
     //calculation for gross pay
     public static double GrossPay(String employeeNumber, long hours, long mins, long overtimeHours, long overtimeMins){ 
-                String csvURL = "https://drive.google.com/uc?export=download&id=1Gh7C6XjNXvdYJHEnS39kXN21CtkL-1Zh";
+                String csvURL = "https://drive.google.com/uc?export=download&id=1lQMufI6JKpVuEsQSBnbc9RkXdnfbGi2T";
         
         //declaration of the variables to use
         double hourlyRate = 0.0;
@@ -134,6 +142,8 @@ public class SalaryComputation {
         return salary;
     };
     
+    
+    //ATTENDANCE COMPUTATION
     public static HoursMinutes HoursCalculator(List<String[]> employee){
         
         long hoursGathered = 0;
@@ -191,6 +201,58 @@ public class SalaryComputation {
         return new HoursMinutes(hoursGathered, minsGathered, overtimeHours, overtimeMins);
     };
 
+    // COMPUTE SALARY DEDUCTIONS
+    public static double computeDeductions(double salary) {
+    double[][] sssRanges = {
+        {0, 3249.99, 135.0}, {3250, 3749.99, 157.5}, {3750, 4249.99, 180.0},
+        {4250, 4749.99, 202.5}, {4750, 5249.99, 225.0}, {5250, 5749.99, 247.5},
+        {5750, 6249.99, 270.0}, {6250, 6749.99, 292.5}, {6750, 7249.99, 315.0},
+        {7250, 7749.99, 337.5}, {7750, 8249.99, 360.0}, {8250, 8749.99, 382.5},
+        {8750, 9249.99, 405.0}, {9250, 9749.99, 427.5}, {9750, 10249.99, 450.0},
+        {10250, 10749.99, 472.5}, {10750, 11249.99, 495.0}, {11250, 11749.99, 517.5},
+        {11750, 12249.99, 540.0}, {12250, 12749.99, 562.5}, {12750, Double.MAX_VALUE, 585.0}
+    };
+
+    double sssDeduction = 0;
+    for (double[] range : sssRanges) {
+        if (salary >= range[0] && salary <= range[1]) {
+            sssDeduction = range[2];
+            break;
+        }
+    }
+
+    double philHealthDeduction = (salary >= 10000 && salary <= 100000) ? (salary * 0.05) / 2 : 0;
+    double pagIbigDeduction = 100.0;
+
+    double taxableIncome = salary - (sssDeduction + philHealthDeduction + pagIbigDeduction);
+    double withholdingTax = 0;
+
+    if (taxableIncome > 20833 && taxableIncome < 33333) {
+        withholdingTax = (taxableIncome - 20833) * 0.20;
+    } else if (taxableIncome >= 33333 && taxableIncome < 66667) {
+        withholdingTax = 2500 + (taxableIncome - 33333) * 0.25;
+    } else if (taxableIncome >= 66667 && taxableIncome < 166667) {
+        withholdingTax = 10833 + (taxableIncome - 66667) * 0.30;
+    } else if (taxableIncome >= 166667 && taxableIncome < 666667) {
+        withholdingTax = 40833 + (taxableIncome - 166667) * 0.32;
+    } else if (taxableIncome >= 666667) {
+        withholdingTax = 200833 + (taxableIncome - 666667) * 0.35;
+    }
+
+    double totalDeductions = sssDeduction + philHealthDeduction + pagIbigDeduction + withholdingTax;
+    double netSalary = salary - totalDeductions;
+
+    System.out.println("\n--- Deductions Breakdown ---");
+    System.out.println("SSS Deduction: PHP " + sssDeduction);
+    System.out.println("PhilHealth Deduction: PHP " + philHealthDeduction);
+    System.out.println("Pag-IBIG Deduction: PHP " + pagIbigDeduction);
+    System.out.println("Withholding Tax: PHP " + withholdingTax);
+    System.out.println("Total Deductions: PHP " + totalDeductions);
+
+    return netSalary;
+ }
+    
+    //METHOD FOR ATTENDANCE RECORD + SALARY COMPUTATION
     public void computeSalary(String employeeId) {
       /*  
         *Scanner scanner = new Scanner(System.in);
@@ -229,9 +291,15 @@ public class SalaryComputation {
         System.out.println("Hours worked: " + hoursGathered + " hours & " + excessMinutes + " minutes.");
         System.out.println("Overtime worked " + overtimeHoursGathered + " hours & " + excessOvertimeMinutes + " minutes.");
         System.out.println("");
-        
-        
-        System.out.println("Gross Salary of the employee for the month: PHP " + GrossPay(employeeId, hoursGathered, excessMinutes, overtimeHoursGathered, excessOvertimeMinutes));
+      
 
+        double grossSalary = GrossPay(employeeId, hoursGathered, excessMinutes, overtimeHoursGathered, excessOvertimeMinutes);
+            System.out.println("\nGross Salary of the employee for the month: PHP " + grossSalary);
+             // Call deduction calculation
+             double netSalary = computeDeductions(grossSalary);
+         
+            // DISPLAY NET SALARY
+            System.out.println("\nNet Salary: PHP " + netSalary);
+        
     }
 }
