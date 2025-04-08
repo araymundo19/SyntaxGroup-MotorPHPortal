@@ -14,8 +14,8 @@ import org.apache.commons.csv.CSVRecord;
 
 public class EmployeeData {
     private static final String EMPLOYEE_DATA_URL = "https://drive.google.com/uc?export=download&id=1Gh7C6XjNXvdYJHEnS39kXN21CtkL-1Zh";
-    private static final String DEFAULT_PASSWORD = "****"; // Default Employee Pass
-    private static final String ADMIN_KEY = "******"; // Default Admin Key
+    private static final String DEFAULT_PASSWORD = "password"; // Default Employee Pass
+    private static final String ADMIN_KEY = "admin"; // Default Admin Key
     private static Map<String, Employee> employeeMap = new HashMap<>(); // To store Employee objects. Using Employee ID as key; Values as Employee objects.
 
     /*
