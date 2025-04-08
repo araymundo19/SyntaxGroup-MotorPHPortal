@@ -205,7 +205,7 @@ public class SalaryComputation {
                         double grossPay = GrossPay(employeeId, work, ot);
                         System.out.printf("Gross Pay for Week %d : PHP %.2f\n", i + 1, grossPay);
                         double netPay = computeDeductions(grossPay, employeeId, late);
-                        System.out.printf("Gross Pay for Week %d : PHP %.2f\n", i + 1, netPay);
+                        System.out.printf("Net Pay for Week %d : PHP %.2f\n", i + 1, netPay);
                         totalGross += grossPay;
                         totalNet += netPay;
                         
@@ -215,6 +215,7 @@ public class SalaryComputation {
                 }
             System.out.printf("Gross Pay for the month: PHP %.2f\n", totalGross);
             System.out.printf("Net Pay for the month: PHP %.2f\n", totalNet);
+            System.out.println("");
         }
      
     }
