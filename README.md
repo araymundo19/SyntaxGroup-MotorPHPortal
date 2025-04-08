@@ -2,7 +2,6 @@
 
 ![Java](https://img.shields.io/badge/Language-Java-blue.svg)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 ## Description
 
