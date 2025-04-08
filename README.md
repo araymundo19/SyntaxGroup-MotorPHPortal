@@ -45,7 +45,7 @@ This is a simple console-based Employee Portal System developed in **Java**. It 
 5. Enter the necessary details in the console prompt
 
 ## Sample Output
-You can find the pdf here [PDF File]([https://pages.github.com/](https://drive.google.com/file/d/1zk3rI6YtemFsR-1lbdECMQ-ARIcgSeCR/view?usp=drive_link)).
+You can find the pdf here [PDF File](https://pages.github.com/](https://drive.google.com/file/d/1zk3rI6YtemFsR-1lbdECMQ-ARIcgSeCR/view?usp=drive_link)).
 
 ## QA - Manual testing
-For the previous version (MS2 submission), you can find the pdf here [PDF File](https://pages.github.com/](https://drive.google.com/file/d/1zk3rI6YtemFsR-1lbdECMQ-ARIcgSeCR/view?usp=drive_link)).
+For the previous version (MS2 submission), you can find the pdf here [PDF File](https://pages.github.com/](https://drive.google.com/file/d/19cLuhTDIO4i3k5YHfI7gMaQApNgsF9gM/view?usp=drive_link)).
