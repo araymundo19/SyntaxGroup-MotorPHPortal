@@ -49,7 +49,9 @@ public class SalaryComputation {
         double salary = 0.0;
         double riceSubsidy = 0.0;
         double phoneAllowance = 0.0;
-        double overtimeRate = 0.0 / 60;
+        double overtimeRate = 0.0;
+        double overtimeSalary = 0.0;
+        double basePay = 0.0;
         
     
             /*try(CSVReader csvReader = new CSVReader(new FileReader(csvFile));){
@@ -61,7 +63,7 @@ public class SalaryComputation {
             for(int i = 1; i < rows.size(); i++){
                 String[]value = rows.get(i);
                 if(parseInt(value[0]) == parseInt(employeeNumber)){
-                    hourlyRate = parseFloat(value[18]) / 60;
+                    hourlyRate = (parseFloat(value[18]) / 60);
                     //add subsidies
                     //replace method is used to negate or escape the comma -> 1,500
                     riceSubsidy = parseFloat(value[14].replace(",", ""));
@@ -72,7 +74,20 @@ public class SalaryComputation {
                 }
             }
             
-            salary = (hourlyRate * minutesWorked) + riceSubsidy + phoneAllowance + (overtimeRate * overtimeMins);
+            
+            basePay = (hourlyRate * minutesWorked);
+            riceSubsidy = riceSubsidy / 4;
+            phoneAllowance = phoneAllowance / 4;
+            overtimeSalary = (overtimeRate * overtimeMins);
+            salary =  basePay + riceSubsidy + phoneAllowance + overtimeSalary;
+            
+            System.out.println("\n--- Gross Pay Breakdown ---");
+            System.out.printf("Base Pay: PHP  %, .2f%n", basePay);
+            System.out.printf("Phone Allowance: PHP  %, .2f%n", phoneAllowance);
+            System.out.printf("Rice Subsidy: PHP  %, .2f%n", riceSubsidy);
+            System.out.printf("Overtime Pay: PHP %, .2f%n", overtimeSalary);
+            System.out.println("\n--- End of Gross Pay Breakdown ---");
+            System.out.println("");
             
                      
         return salary;
