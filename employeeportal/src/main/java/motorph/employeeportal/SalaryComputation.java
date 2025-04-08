@@ -137,12 +137,12 @@ public class SalaryComputation {
     double netSalary = salary - totalDeductions;
 
     System.out.println("\n--- Deductions Breakdown ---");
-    System.out.println("SSS Deduction: PHP " + sssDeduction);
-    System.out.println("PhilHealth Deduction: PHP " + philHealthDeduction);
-    System.out.println("Pag-IBIG Deduction: PHP " + pagIbigDeduction);
-    System.out.printf("Withholding Tax: PHP %.2f\n ", withholdingTax);
-    System.out.printf("Late Deductions: PHP %.2f\n ", lateDeductions);
-    System.out.printf("Total Deductions: PHP %.2f\n ", totalDeductions);
+    System.out.printf("SSS Deduction: PHP  %, .2f%n", sssDeduction);
+    System.out.printf("PhilHealth Deduction: PHP  %, .2f%n", philHealthDeduction);
+    System.out.printf("Pag-IBIG Deduction: PHP  %, .2f%n", pagIbigDeduction);
+    System.out.printf("Withholding Tax: PHP %, .2f%n", withholdingTax);
+    System.out.printf("Late Deductions: PHP %, .2f%n", lateDeductions);
+    System.out.printf("Total Deductions: PHP %, .2f%n", totalDeductions);
     System.out.println("\n--- End of Deductions Breakdown ---");
     System.out.println("");
 
@@ -203,9 +203,10 @@ public class SalaryComputation {
                         double ot   = weekData.get(2);
 
                         double grossPay = GrossPay(employeeId, work, ot);
-                        System.out.printf("Gross Pay for Week %d : PHP %.2f\n", i + 1, grossPay);
+                        System.out.printf("Gross Pay for Week %d : PHP %, .2f\n", i + 1, grossPay);
                         double netPay = computeDeductions(grossPay, employeeId, late);
-                        System.out.printf("Net Pay for Week %d : PHP %.2f\n", i + 1, netPay);
+                        System.out.printf("Net Pay for Week %d : PHP %, .2f\n", i + 1, netPay);
+                        System.out.println("------------------------------");
                         totalGross += grossPay;
                         totalNet += netPay;
                         
@@ -213,8 +214,10 @@ public class SalaryComputation {
                         System.out.println("⚠️ Skipping week due to incomplete data!");
                     }
                 }
-            System.out.printf("Gross Pay for the month: PHP %.2f\n", totalGross);
-            System.out.printf("Net Pay for the month: PHP %.2f\n", totalNet);
+            System.out.println("==============================");
+            System.out.printf("Gross Pay for the month: PHP %, .2f\n", totalGross);
+            System.out.printf("Net Pay for the month: PHP %, .2f\n", totalNet);
+            System.out.println("==============================");
             System.out.println("");
         }
      
