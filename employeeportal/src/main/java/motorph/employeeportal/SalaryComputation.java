@@ -133,7 +133,7 @@ public class SalaryComputation {
         withholdingTax = 200833 + (taxableIncome - 666667) * 0.35;
     }
 
-    double totalDeductions = sssDeduction + philHealthDeduction + pagIbigDeduction + withholdingTax + lateDeductions;
+    double totalDeductions = (sssDeduction / 4) + (philHealthDeduction / 4) + (pagIbigDeduction / 4) + (withholdingTax / 4) + lateDeductions;
     double netSalary = salary - totalDeductions;
 
     System.out.println("\n--- Deductions Breakdown ---");
@@ -191,8 +191,7 @@ public class SalaryComputation {
             System.out.println("");
             
             double totalGross = 0.0;
-            double totalLate = 0.0;
-            double netPay = 0.0;
+            double totalNet = 0.0;
             
             for (int i = 0; i < attendanceCollector.size(); i++) {
                     
@@ -205,16 +204,17 @@ public class SalaryComputation {
 
                         double grossPay = GrossPay(employeeId, work, ot);
                         System.out.printf("Gross Pay for Week %d : PHP %.2f\n", i + 1, grossPay);
+                        double netPay = computeDeductions(grossPay, employeeId, late);
+                        System.out.printf("Gross Pay for Week %d : PHP %.2f\n", i + 1, netPay);
                         totalGross += grossPay;
-                        totalLate += late;
+                        totalNet += netPay;
                         
                     } else {
                         System.out.println("⚠️ Skipping week due to incomplete data!");
                     }
                 }
             System.out.printf("Gross Pay for the month: PHP %.2f\n", totalGross);
-            netPay = computeDeductions(totalGross, employeeId, totalLate);
-            System.out.printf("Net Pay for the month: PHP %.2f\n", netPay);
+            System.out.printf("Net Pay for the month: PHP %.2f\n", totalNet);
         }
      
     }
