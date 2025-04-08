@@ -9,8 +9,6 @@
 This is a simple console-based Employee Portal System developed in **Java**. It allows users to manage employee records such as viewing employee records and weekly salary calculation reports through a command-line interface.
 
 ## Features
-
-## Features
 - **Login Authentication** (Admin & Regular Employee)
 - **Role-Based Access Control**
 - **Employee Profile Viewing**
